@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Entity(name="users")
+@Entity(name = "users")
 @Table(name = "users")
 @EqualsAndHashCode(of = "id")
 @Getter
@@ -30,7 +30,7 @@ public class User {
     private String password;
     private UserType userType;
 
-    public User(@NotNull UserDTO data){
+    public User(UserDTO data){
         this.setFirstname(data.firstname());
         this.setLastname(data.lastname());
         this.setBalance(data.balance());
