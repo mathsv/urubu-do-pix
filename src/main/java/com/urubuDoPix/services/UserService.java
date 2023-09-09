@@ -15,8 +15,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User findUserById(UUID id){
+    public User findUserById(UUID id) throws Exception {
         return this.userRepository.findUserById(id).orElseThrow(()-> new Exception("Usuário não encontrado!"));
+    }
+    public User findUserByDocument(String document) throws Exception {
+        return this.userRepository.findUserByDocument(document).orElseThrow(()-> new Exception("Usuário não encontrado!"));
     }
     public void saveUser(User user){
         this.userRepository.save(user);
