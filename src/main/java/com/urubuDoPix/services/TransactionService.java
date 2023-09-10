@@ -5,11 +5,7 @@ import com.urubuDoPix.model.Transaction;
 import com.urubuDoPix.model.User;
 import com.urubuDoPix.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -65,5 +61,21 @@ public class TransactionService {
     public String deleteTransaction(UUID id) {
         this.transactionRepository.deleteById(id);
         return "Transação deletada!";
+    }
+
+    public String cancelTransaction(Transaction transaction) throws Exception {
+        User sender = this.userService.findUserById(transaction.getSender().getId());
+        User receiver = this.userService.findUserById(transaction.getReceiver().getId());
+
+        receiver.setBalance(receiver.getBalance().subtract(transaction.getAmount()));
+        sender.setBalance(sender.getBalance().add(transaction.getAmount()));
+        this.userService.saveUser(receiver);
+        this.userService.saveUser(sender);
+
+        transaction.setCancelled(true);
+        transaction.setCancelDateTime(LocalDateTime.now());
+
+        this.transactionRepository.save(transaction);
+        return "Transação cancelada com sucesso!";
     }
 }
