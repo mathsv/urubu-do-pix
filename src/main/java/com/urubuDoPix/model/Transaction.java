@@ -26,4 +26,6 @@ public class Transaction {
     private User receiver;
     private BigDecimal amount;
     private LocalDateTime timestamp;
+    private boolean isCancelled;
+    private LocalDateTime cancelDateTime;
 }
