@@ -61,4 +61,9 @@ public class TransactionService {
     public List<Transaction> getAllTransactions(){
         return this.transactionRepository.findAll();
     }
+
+    public String deleteTransaction(UUID id) {
+        this.transactionRepository.deleteById(id);
+        return "Transação deletada!";
+    }
 }

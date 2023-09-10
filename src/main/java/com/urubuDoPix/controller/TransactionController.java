@@ -26,7 +26,6 @@ public class TransactionController {
         Transaction newTransaction = this.transactionService.createTransaction(data);
         return new ResponseEntity<>(newTransaction, HttpStatus.OK);
     }
-
     @GetMapping("/all")
     public ResponseEntity<List<Transaction>> getAllTransactions(){
         return new ResponseEntity<>(this.transactionService.getAllTransactions(), HttpStatus.OK);
@@ -35,6 +34,12 @@ public class TransactionController {
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Transaction>> getTransactionById(@PathVariable UUID id){
         Optional<Transaction> transaction = this.transactionService.getTransaction(id);
+        return new ResponseEntity<>(transaction, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTransactionById(@PathVariable UUID id){
+        String transaction = this.transactionService.deleteTransaction(id);
         return new ResponseEntity<>(transaction, HttpStatus.OK);
     }
 }
